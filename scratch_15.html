@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Invitație la Nuntă – Ștefania & Dragoș</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Hurricane&family=Imperial+Script&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+            rel="stylesheet"
+    />
+    <style>
+        /* Reset & base */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #faf7f2;
+            color: #5e3a27;
+            line-height: 1.6;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 100vh;
+            padding-top: 100px;
+            background: center 28% / cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .slideshow .slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 28%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            filter: brightness(0.7);
+        }
+
+        .slideshow .slide.active {
+            opacity: 1;
+        }
+
+        /* Hero heading if needed */
+        .hero h1 {
+            position: relative;
+            font-family: 'Hurricane', cursive;
+            font-size: clamp(6rem, 14vw, 12rem);
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+            z-index: 1;
+        }
+
+        /* Page wrapper with side borders */
+        .page-wrapper {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem; /* padding top to separate from hero */
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Side borders */
+        .side-border {
+            display: block;
+            width: 200px;
+            background-image: url("margine.svg");
+            background-repeat: repeat-y;
+            background-size: contain;
+            background-position: center top;
+        }
+
+        .side-border.left {
+            transform: scaleX(-1);
+        }
+
+        .side-border.right {
+            /* normal */
+        }
+
+        /* Hide side borders on small screens */
+        @media (max-width: 900px) {
+            .side-border {
+                display: none;
+            }
+        }
+
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .logo-container {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            display: inline-block;
+        }
+
+        /* Extra image section */
+        .extra-image-section {
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0 2rem;
+        }
+
+        .extra-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Section headings */
+        section h2 {
+            font-family: 'Imperial Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Text styles */
+        .center-hurricane {
+            text-align: center;
+            font-family: 'Hurricane', cursive;
+            font-size: 2rem;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .center-bold {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Map containers */
+        .map-container {
+            margin-top: 1rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-photo {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form */
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        form label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        input[type='text'], select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: #c39b6b;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            justify-self: start;
+        }
+
+        button:hover {
+            background: #a78356;
+        }
+
+        /* RSVP iframe container */
+        .iframe-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            overflow-x: auto;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            max-width: 640px;
+            height: 735px;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Responsive tweaks */
+
+        @media (max-width: 1100px) {
+            .page-wrapper {
+                max-width: 100%;
+                padding: 2rem 1rem 4rem;
+            }
+            .main-content {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .extra-image-section {
+                padding: 1rem 0;
+            }
+
+            .extra-image {
+                max-width: 100%;
+                border-radius: 8px;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .center-hurricane {
+                font-size: 1.6rem;
+            }
+
+            .iframe-container iframe {
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="hero">
+    <div class="slideshow">
+        <img src="mirii.jpeg" alt="Mirii 1" class="slide active"/>
+        <img src="mirii2.jpeg" alt="Mirii 2" class="slide"/>
+        <img src="mirii3.jpeg" alt="Mirii 3" class="slide"/>
+    </div>
+    <!-- <h1>Ștefania &amp; Dragoș</h1> -->
+</header>
+
+<div class="page-wrapper" role="main">
+    <div class="side-border left" aria-hidden="true"></div>
+
+    <main class="main-content">
+        <div class="logo-container">
+            <img src="logo.svg" alt="Logo Nuntă" class="logo"/>
+        </div>
+
+        <section class="extra-image-section" aria-label="Imagine descriptivă">
+            <img src="invitatie.png" alt="Imagine descriptivă" class="extra-image"/>
+        </section>
+
+        <section id="ceremony">
+            <h2>Ceremonia Religioasă</h2>
+            <p class="center-hurricane">Biserica „Sf. Împărați Constantin și Elena”, Viișoara</p>
+            <p class="center-bold">Ora 14:00</p>
+            <div class="map-container">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2760.166682411582!2d26.888306699999998!3d46.2270299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b5a908ab22a5bd%3A0x90def1094a73fdad!2sBiserica%20Sfiintii%20Imparati%20Constantin%20si%20Elena!5e0!3m2!1sro!2sro!4v1748697474153!5m2!1sro!2sro"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+
+        <section id="reception">
+            <br>
+            <h2>Petrecerea</h2>
+            <p class="center-hurricane">Armony Grand Hall, Piatra Neamț</p>
+            <p class="center-bold">Ora 18:30</p>
+            <img src="placeholder-sala.jpg" alt="Sala petrecere" class="map-photo"/>
+            <div class="map-container">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2724.6988327887034!2d26.391258177058653!3d46.928302671135675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473555aa320dbcc7%3A0x878d1eafafd676fb!2sArmony%20-%20Restaurant%20%26%20Events!5e0!3m2!1sro!2sro!4v1748697859889!5m2!1sro!2sro"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+
+        <section id="rsvp" aria-label="Confirmare participare">
+           <br>
+            <p class="center-bold">Vă rugăm sa ne confirmați participarea folosind formularul de mai jos sau prin apel telefonic la numerele</p>
+            <ul style="text-align: center; list-style: none; padding: 0; margin-bottom: 1rem;">
+                <li>📞 Ștefania: 0741 123 456</li>
+                <li>📞 Dragoș: 0747 561 719</li>
+            </ul>
+            <div class="iframe-container">
+                <iframe
+                        src="https://docs.google.com/forms/d/e/1FAIpQLSdt5WF03GOrdvXA-mzyeij3rJ57OKlOJfpXPemO_wHJ3iRh7g/viewform?embedded=true"
+                        frameborder="0" marginheight="0" marginwidth="0" loading="lazy"
+                        title="Formular confirmare participare">
+                    Se încarcă…
+                </iframe>
+            </div>
+        </section>
+    </main>
+
+    <div class="side-border right" aria-hidden="true"></div>
+</div>
+
+<footer>
+    <p>© Powerd with love by Alexandra ❤️ 2025</p>
+</footer>
+
+<script>
+    const slides = document.querySelectorAll('.slideshow .slide');
+    let currentIndex = 0;
+
+    function showNextSlide() {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+    }
+
+    setInterval(showNextSlide, 2000);
+</script>
+</body>
+</html>
